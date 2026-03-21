@@ -3,667 +3,866 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-<style>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style is:global>
+  /* ── TOKENS ── */
   :root {
-    --color-primary: #1a1a2e;
-    --color-accent: #e94560;
-    --color-accent2: #0f3460;
-    --color-light: #f8f9fa;
-    --color-text: #333;
-    --color-muted: #666;
-    --font: 'Inter', sans-serif;
+    --navy:       oklch(18% 0.04 260);
+    --navy-mid:   oklch(25% 0.04 260);
+    --accent:     oklch(44% 0.14 250);
+    --accent-lt:  oklch(58% 0.12 250);
+    --cream:      oklch(97% 0.008 80);
+    --cream-2:    oklch(93% 0.01 80);
+    --ink:        oklch(20% 0.02 260);
+    --ink-2:      oklch(38% 0.02 260);
+    --ink-3:      oklch(55% 0.015 260);
+    --border:     oklch(88% 0.01 260);
+
+    --ff-display: 'Fraunces', Georgia, serif;
+    --ff-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: var(--font);
-    color: var(--color-text);
-    background: #fff;
-    margin: 0;
-    padding: 0;
+    font-family: var(--ff-body);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* ── NAV ── */
   .nav {
-    background: var(--color-primary);
-    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+    height: 60px;
+    border-bottom: 1px solid oklch(30% 0.04 260);
   }
   .nav-brand {
-    color: #fff;
+    font-family: var(--ff-display);
     font-weight: 700;
-    font-size: 1.25rem;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-  }
-  .nav-cta {
-    background: var(--color-accent);
+    font-size: 1.125rem;
     color: #fff;
-    padding: 0.5rem 1.25rem;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.875rem;
     text-decoration: none;
-    white-space: nowrap;
+    letter-spacing: -0.01em;
   }
+  .nav-brand span { color: var(--accent-lt); }
+  .nav-cta {
+    font-family: var(--ff-body);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 120ms;
+  }
+  .nav-cta:hover { opacity: 0.85; }
 
   /* ── HERO ── */
   .hero {
-    background: var(--color-primary);
+    background: var(--navy);
     color: #fff;
+    padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 7vw, 5rem);
+    position: relative;
+    overflow: hidden;
     text-align: center;
-    padding: 5rem 2rem 4rem;
   }
-  .hero-eyebrow {
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, oklch(44% 0.14 250 / 0.18), transparent);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-accent);
-    font-weight: 600;
-    margin-bottom: 1rem;
+    color: var(--accent-lt);
+    margin-bottom: 1.5rem;
+  }
+  .hero-kicker::before {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--accent-lt);
+  }
+  .hero-kicker::after {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--accent-lt);
   }
   .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-family: var(--ff-display);
     font-weight: 900;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 auto 1.75rem;
     max-width: 780px;
-    margin-left: auto;
-    margin-right: auto;
   }
-  .hero h1 span {
-    color: var(--color-accent);
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-lt);
   }
-  .hero-subtitle {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.75);
-    max-width: 580px;
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.175rem);
+    color: oklch(80% 0.02 260);
+    line-height: 1.75;
+    max-width: 52ch;
     margin: 0 auto 2.5rem;
-    line-height: 1.7;
+    font-weight: 400;
   }
-  .hero-cta {
-    display: inline-block;
-    background: var(--color-accent);
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
     color: #fff;
-    padding: 0.9rem 2.25rem;
-    border-radius: 4px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    padding: 0.875rem 2rem;
+    border-radius: 2px;
     text-decoration: none;
-    transition: opacity 0.2s;
+    transition: transform 200ms var(--ease-out-quart), opacity 150ms;
   }
-  .hero-cta:hover { opacity: 0.88; }
+  .btn-hero:hover { transform: translateY(-2px); opacity: 0.9; }
+  .btn-hero svg { width: 1rem; height: 1rem; fill: currentColor; flex-shrink: 0; }
+  .hero-note {
+    font-size: 0.8125rem;
+    color: oklch(65% 0.02 260);
+    font-style: italic;
+  }
 
-  /* ── SECTION COMMON ── */
-  .section {
-    padding: 4.5rem 2rem;
-    max-width: 900px;
+  /* ── STATS GRID ── */
+  .stats-wrap {
+    background: var(--navy);
+    border-top: 1px solid oklch(28% 0.04 260);
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
+  }
+  .stats-grid {
+    max-width: 640px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: oklch(28% 0.04 260);
+    border: 1px solid oklch(28% 0.04 260);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stat-item {
+    background: var(--navy-mid);
+    padding: 1.5rem 1.75rem;
+    text-align: center;
+  }
+  .stat-item strong {
+    display: block;
+    font-family: var(--ff-display);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-item span {
+    font-size: 0.8125rem;
+    color: oklch(62% 0.02 260);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ── SECTION BASE ── */
+  .wrap {
+    padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 5vw, 3rem);
+  }
+  .wrap--cream  { background: var(--cream); }
+  .wrap--cream2 { background: var(--cream-2); }
+
+  .container {
+    max-width: 960px;
     margin: 0 auto;
   }
-  .section-title {
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
   }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .section-heading {
+    font-family: var(--ff-display);
+    font-weight: 900;
+    font-size: clamp(1.875rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
   .section-lead {
-    font-size: 1.05rem;
-    color: var(--color-muted);
+    font-size: 1.0625rem;
+    color: var(--ink-2);
     line-height: 1.75;
-    margin-bottom: 2.5rem;
-    max-width: 680px;
+    max-width: 56ch;
+    margin-bottom: 3rem;
   }
 
   /* ── COMPARISON TABLE ── */
-  .compare-wrap {
-    background: var(--color-light);
-    padding: 4rem 2rem;
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 24px oklch(20% 0.04 260 / 0.06);
   }
-  .compare-inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .compare-inner .section-title {
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  .compare-inner .section-lead {
-    text-align: center;
-    margin: 0 auto 2.5rem;
-  }
-  .compare-table {
+  .cmp-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
     background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    min-width: 600px;
   }
-  .compare-table thead tr {
-    background: var(--color-primary);
+  .cmp-table thead tr {
+    background: var(--navy);
     color: #fff;
   }
-  .compare-table th {
-    padding: 1rem 1.25rem;
+  .cmp-table th {
+    padding: 1.125rem 1.5rem;
     text-align: left;
+    font-size: 0.75rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: oklch(65% 0.02 260);
+  }
+  .cmp-table th:first-child { width: 32%; color: #fff; }
+  .cmp-table th:last-child  { color: oklch(75% 0.12 145); }
+  .cmp-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 150ms;
+  }
+  .cmp-table tbody tr:last-child { border-bottom: none; }
+  .cmp-table tbody tr:hover { background: var(--cream); }
+  .cmp-table td {
+    padding: 1rem 1.5rem;
+    vertical-align: middle;
+    line-height: 1.55;
+  }
+  .cmp-table td:first-child {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--ink);
+  }
+  .col-no, .col-yes {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
     font-size: 0.9rem;
-    letter-spacing: 0.03em;
   }
-  .compare-table th:first-child { width: 35%; }
-  .compare-table td {
-    padding: 0.9rem 1.25rem;
-    border-bottom: 1px solid #eee;
-    vertical-align: top;
-    line-height: 1.6;
+  .col-no  { color: oklch(48% 0.08 20); }
+  .col-yes { color: oklch(35% 0.12 145); font-weight: 600; }
+  .icon-x, .icon-ck {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 900;
+    margin-top: 0.15rem;
   }
-  .compare-table tbody tr:last-child td { border-bottom: none; }
-  .compare-table tbody tr:nth-child(even) td { background: #fafafa; }
-  .col-listing { color: #b91c1c; }
-  .col-personal { color: #16a34a; font-weight: 600; }
-  .icon-x::before { content: '✗ '; }
-  .icon-check::before { content: '✓ '; }
+  .icon-x  { background: oklch(93% 0.03 20);  color: oklch(48% 0.08 20); }
+  .icon-ck { background: oklch(90% 0.07 145); color: oklch(35% 0.12 145); }
 
   /* ── REASONS GRID ── */
-  .reasons-wrap {
-    background: #fff;
-  }
   .reasons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.75rem;
-    margin-top: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
   }
   .reason-card {
-    background: var(--color-light);
-    border-radius: 8px;
-    padding: 1.75rem;
-    border-top: 3px solid var(--color-accent);
+    background: #fff;
+    padding: 2rem 1.75rem;
+    position: relative;
+    transition: background 200ms;
   }
-  .reason-number {
-    font-size: 2rem;
+  .reason-card:hover { background: var(--cream); }
+  .reason-num {
+    font-family: var(--ff-display);
+    font-size: 3.5rem;
     font-weight: 900;
-    color: var(--color-accent);
     line-height: 1;
-    margin-bottom: 0.5rem;
+    color: var(--cream-2);
+    letter-spacing: -0.04em;
+    margin-bottom: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    transition: color 300ms var(--ease-out-quart);
   }
+  .reason-card:hover .reason-num { color: oklch(88% 0.06 250); }
   .reason-card h3 {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 700;
+    color: var(--ink);
     margin-bottom: 0.5rem;
+    line-height: 1.3;
   }
   .reason-card p {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-    line-height: 1.65;
-  }
-
-  /* ── QUOTE BAND ── */
-  .quote-band {
-    background: var(--color-accent2);
-    color: #fff;
-    text-align: center;
-    padding: 3.5rem 2rem;
-  }
-  .quote-band blockquote {
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    font-weight: 700;
-    line-height: 1.5;
-    max-width: 680px;
-    margin: 0 auto 1rem;
-    font-style: italic;
-  }
-  .quote-band cite {
     font-size: 0.875rem;
-    color: rgba(255,255,255,0.65);
+    color: var(--ink-3);
+    line-height: 1.7;
+  }
+  .reason-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 350ms var(--ease-out-expo);
+  }
+  .reason-card:hover::after { height: 100%; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    background: var(--navy-mid);
+    padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+  }
+  .pull-quote blockquote {
+    font-family: var(--ff-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.375rem, 3vw, 2.1rem);
+    line-height: 1.4;
+    color: #fff;
+    max-width: 680px;
+    margin: 0 auto 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .pull-quote blockquote strong { font-weight: 700; font-style: normal; }
+  .pull-quote cite {
+    font-size: 0.8125rem;
+    color: oklch(88% 0.06 250);
     font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
-  /* ── STORY SECTION ── */
-  .story-wrap {
-    background: var(--color-light);
-    padding: 4.5rem 2rem;
+  /* ── FEATURES LIST ── */
+  .features-list {
+    border-top: 1px solid var(--border);
   }
-  .story-inner {
-    max-width: 900px;
-    margin: 0 auto;
+  .feature-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    transition: padding 200ms var(--ease-out-quart);
   }
-
-  /* ── FEATURE ROWS ── */
-  .feature-row {
-    display: flex;
-    gap: 3rem;
-    align-items: flex-start;
-    margin-bottom: 3rem;
-  }
-  .feature-row:last-child { margin-bottom: 0; }
-  .feature-icon {
-    flex-shrink: 0;
+  .feature-emoji {
     width: 3rem;
     height: 3rem;
-    border-radius: 50%;
-    background: var(--color-accent);
+    background: var(--cream-2);
+    border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    color: #fff;
+    flex-shrink: 0;
+    transition: background 200ms, transform 200ms var(--ease-out-expo);
+  }
+  .feature-item:hover .feature-emoji {
+    background: oklch(92% 0.05 250);
+    transform: scale(1.1);
   }
   .feature-body h3 {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 0.4rem;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
   }
   .feature-body p {
-    font-size: 0.92rem;
-    color: var(--color-muted);
+    font-size: 0.875rem;
+    color: var(--ink-3);
     line-height: 1.7;
   }
 
-  /* ── CTA SECTION ── */
-  .cta-wrap {
-    background: var(--color-primary);
-    color: #fff;
+  /* ── FINAL CTA ── */
+  .cta-section {
+    background: var(--navy);
+    padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 3rem);
     text-align: center;
-    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
   }
-  .cta-wrap h2 {
-    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 100%, oklch(44% 0.14 250 / 0.2), transparent);
+    pointer-events: none;
+  }
+  .cta-section .container { position: relative; z-index: 1; }
+  .cta-section h2 {
+    font-family: var(--ff-display);
     font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
     margin-bottom: 1rem;
-    line-height: 1.2;
   }
-  .cta-wrap p {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.7);
-    max-width: 520px;
+  .cta-section h2 em { font-style: italic; color: var(--accent-lt); }
+  .cta-section p {
+    font-size: 1.0625rem;
+    color: oklch(72% 0.02 260);
+    max-width: 44ch;
     margin: 0 auto 2.5rem;
     line-height: 1.7;
   }
-  .cta-buttons {
+  .cta-group {
     display: flex;
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    align-items: center;
   }
-  .btn-primary {
-    background: var(--color-accent);
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
     color: #fff;
-    padding: 0.9rem 2.25rem;
-    border-radius: 4px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    padding: 1rem 2.25rem;
+    border-radius: 2px;
     text-decoration: none;
+    transition: transform 200ms var(--ease-out-quart), opacity 150ms;
   }
-  .btn-secondary {
-    background: transparent;
-    color: #fff;
-    padding: 0.9rem 2.25rem;
-    border-radius: 4px;
+  .btn-cta:hover { transform: translateY(-3px); opacity: 0.9; }
+  .btn-cta svg { width: 1rem; height: 1rem; fill: currentColor; flex-shrink: 0; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.875rem;
     font-weight: 600;
-    font-size: 1rem;
+    color: oklch(60% 0.02 260);
     text-decoration: none;
-    border: 2px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid oklch(40% 0.02 260);
+    padding-bottom: 1px;
+    transition: color 150ms, border-color 150ms;
   }
+  .btn-ghost:hover { color: #fff; border-color: oklch(65% 0.02 260); }
 
   /* ── FOOTER ── */
   .footer {
-    background: var(--color-primary);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 1.5rem 2rem;
-    text-align: center;
-    color: rgba(255,255,255,0.45);
-    font-size: 0.8rem;
+    background: var(--navy);
+    border-top: 1px solid oklch(28% 0.04 260);
+    padding: 1.5rem clamp(1.5rem, 5vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
-  .footer a {
-    color: rgba(255,255,255,0.55);
-    text-decoration: none;
-  }
-
-  @media (max-width: 600px) {
-    .feature-row { flex-direction: column; gap: 1rem; }
-    .compare-table th, .compare-table td { padding: 0.75rem 0.75rem; font-size: 0.85rem; }
-    .hero { padding: 3.5rem 1.25rem 3rem; }
-  }
+  .footer p { font-size: 0.8125rem; color: oklch(45% 0.02 260); }
+  .footer a  { color: oklch(58% 0.02 260); text-decoration: none; transition: color 150ms; }
+  .footer a:hover { color: oklch(72% 0.02 260); }
 
   /* ── ANIMATIONS ── */
-
-  /* Hero entrance */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-18px); }
+  @keyframes hero-up {
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  /* Hero entrance — JS sets initial state inline, then animates in */
+
+  /* Reveal classes — JS sets opacity:0 + transform as inline styles after DOM ready,
+     then transitions to visible. No CSS default opacity:0 so layout never breaks. */
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
-  .hero-eyebrow { animation: fadeDown 0.6s ease both; animation-delay: 0.1s; }
-  .hero h1      { animation: fadeUp  0.7s ease both; animation-delay: 0.25s; }
-  .hero-subtitle{ animation: fadeUp  0.7s ease both; animation-delay: 0.4s; }
-  .hero-cta     { animation: fadeUp  0.7s ease both; animation-delay: 0.55s; }
-
-  /* Scroll-reveal base state */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.from-left  { transform: translateX(-32px); }
-  .reveal.from-right { transform: translateX(32px); }
-  .reveal.visible {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-
-  /* Stagger children inside grids */
-  .reasons-grid .reason-card { transition-delay: 0s; }
-  .reasons-grid .reason-card:nth-child(2) { transition-delay: 0.1s; }
-  .reasons-grid .reason-card:nth-child(3) { transition-delay: 0.2s; }
-  .reasons-grid .reason-card:nth-child(4) { transition-delay: 0.1s; }
-  .reasons-grid .reason-card:nth-child(5) { transition-delay: 0.2s; }
-  .reasons-grid .reason-card:nth-child(6) { transition-delay: 0.3s; }
-
-  /* Table rows stagger */
-  .compare-table tbody tr {
-    opacity: 0;
-    transform: translateX(-16px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .compare-table tbody tr.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* Card hover lift */
-  .reason-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .reason-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  }
-
-  /* Feature icon pulse on hover */
-  .feature-icon {
-    transition: transform 0.25s ease;
-  }
-  .feature-row:hover .feature-icon {
-    transform: scale(1.15);
-  }
-
-  /* CTA button hover */
-  .btn-primary {
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-  .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
-  .btn-secondary {
-    transition: background 0.2s ease, border-color 0.2s ease;
-  }
-  .btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.7);
-  }
-
-  /* Quote band fade */
-  .quote-band blockquote,
-  .quote-band cite {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .quote-band cite { transition-delay: 0.2s; }
-  .quote-band.visible blockquote,
-  .quote-band.visible cite {
-    opacity: 1;
-    transform: translateY(0);
+  @media (max-width: 640px) {
+    .reasons-grid { grid-template-columns: 1fr; }
   }
 </style>
 
 <!-- Nav -->
 <nav class="nav">
-  <a href="/" class="nav-brand">Prop Find</a>
-  <a href="/#contact" class="nav-cta">Get My Page</a>
+  <a href="/" class="nav-brand">Prop<span>Find</span></a>
+  <a href="https://wa.me/6587423466" class="nav-cta">Get My Page</a>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
-  <p class="hero-eyebrow">For Singapore Property Agents</p>
-  <h1>Why Your Own Landing Page<br>Beats a <span>Property Listing Page</span></h1>
-  <p class="hero-subtitle">
-    A property listing page sells the unit. A personal landing page sells <em>you</em> — the agent clients choose to trust, call, and refer.
-  </p>
-  <a href="https://wa.me/6587423466" class="hero-cta">Get My Personal Page — $20/yr</a>
+  <div class="hero-inner">
+    <p class="hero-kicker">For Singapore Property Agents</p>
+    <h1>Your Name Should Be<br>Bigger Than<br><em>Your Listings.</em></h1>
+    <p class="hero-sub">
+      Portals showcase properties — not you. A personal landing page puts your name, your track record, and your credibility front and centre.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/6587423466" class="btn-hero">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Get My Page — $20/yr
+      </a>
+      <span class="hero-note">No tech skills needed. Done for you in days.</span>
+    </div>
+  </div>
 </section>
 
+<!-- Stats grid -->
+<div class="stats-wrap">
+  <div class="stats-grid">
+    <div class="stat-item"><strong>$20</strong><span>per year, all-in</span></div>
+    <div class="stat-item"><strong>1</strong><span>link to share everywhere</span></div>
+    <div class="stat-item"><strong>0</strong><span>competing agents on your page</span></div>
+    <div class="stat-item"><strong>24/7</strong><span>always-on first impression</span></div>
+  </div>
+</div>
+
 <!-- Comparison Table -->
-<div class="compare-wrap">
-  <div class="compare-inner">
-    <h2 class="section-title reveal">Side-by-Side Comparison</h2>
-    <p class="section-lead reveal">See exactly how a personal landing page stacks up against a typical portal listing page.</p>
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>What Clients See</th>
-          <th>Property Listing Page</th>
-          <th>Personal Landing Page</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Your photo &amp; name</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Small thumbnail, easily ignored</td>
-          <td class="col-personal"><span class="icon-check"></span>Prominent, professional headshot</td>
-        </tr>
-        <tr>
-          <td><strong>Your credentials</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Buried or not shown at all</td>
-          <td class="col-personal"><span class="icon-check"></span>Awards, CEA number, years of experience</td>
-        </tr>
-        <tr>
-          <td><strong>Client testimonials</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Not available on portals</td>
-          <td class="col-personal"><span class="icon-check"></span>Real quotes that build instant trust</td>
-        </tr>
-        <tr>
-          <td><strong>Competing agents shown</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Yes — dozens of agents beside you</td>
-          <td class="col-personal"><span class="icon-check"></span>No — it's your page, only you</td>
-        </tr>
-        <tr>
-          <td><strong>Google searchability</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Portal ranks, not your profile</td>
-          <td class="col-personal"><span class="icon-check"></span>Your name surfaces directly</td>
-        </tr>
-        <tr>
-          <td><strong>You control the content</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Portal decides what's shown</td>
-          <td class="col-personal"><span class="icon-check"></span>Fully yours — update anytime</td>
-        </tr>
-        <tr>
-          <td><strong>Works on flyers &amp; WhatsApp</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Long, ugly portal URLs</td>
-          <td class="col-personal"><span class="icon-check"></span>One short, shareable link</td>
-        </tr>
-        <tr>
-          <td><strong>Showcases sold history</strong></td>
-          <td class="col-listing"><span class="icon-x"></span>Only active listings</td>
-          <td class="col-personal"><span class="icon-check"></span>Past deals, track record, expertise</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="wrap wrap--cream2">
+  <div class="container">
+    <p class="section-label reveal">The Real Difference</p>
+    <h2 class="section-heading reveal">Portal listing vs. Personal page</h2>
+    <p class="section-lead reveal">Every time a client searches your name, this is what they find — or what they <em>should</em> find.</p>
+    <div class="table-wrap reveal">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>What clients see</th>
+            <th>Portal listing page</th>
+            <th>Personal landing page</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cmp-row-reveal">
+            <td>Your photo &amp; name</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Small thumbnail among many agents</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Prominent, professional headshot</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Your credentials</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Buried or hidden entirely</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Awards, CEA number, years of experience</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Client testimonials</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Not available on portals</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Real quotes that build instant trust</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Competing agents shown</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Dozens of agents on the same screen</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Only you — no distractions</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Google searchability</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>The portal ranks, not your name</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Your name surfaces directly</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>You own the content</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Platform decides what's shown</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Fully yours — update anytime</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Shareable link</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Long, ugly portal URLs</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>One clean link for all channels</span></td>
+          </tr>
+          <tr class="cmp-row-reveal">
+            <td>Track record</td>
+            <td><span class="col-no"><span class="icon-x">✕</span>Active listings only</span></td>
+            <td><span class="col-yes"><span class="icon-ck">✓</span>Past deals, milestones, expertise</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <!-- 6 Reasons -->
-<div class="reasons-wrap">
-  <div class="section">
-    <h2 class="section-title reveal from-left">6 Reasons a Personal Page Changes Everything</h2>
-    <p class="section-lead reveal from-left">Property portals are built to sell properties. A personal landing page is built to sell <strong>you</strong>.</p>
+<div class="wrap wrap--cream">
+  <div class="container">
+    <p class="section-label reveal from-left">Why It Matters</p>
+    <h2 class="section-heading reveal from-left">6 reasons agents with<br>personal pages win more</h2>
+    <p class="section-lead reveal from-left">Portals sell properties. A personal page sells the one thing no portal can — you.</p>
     <div class="reasons-grid">
-      <div class="reason-card reveal">
-        <div class="reason-number">01</div>
+      <div class="reason-card reveal stagger-1">
+        <div class="reason-num">01</div>
         <h3>Clients choose agents, not listings</h3>
-        <p>Research shows buyers and sellers interview multiple agents before committing. Your personal page gives them a reason to stop looking after they find you.</p>
+        <p>Buyers and sellers interview multiple agents before committing. Your page gives them a reason to stop searching after they find you.</p>
       </div>
-      <div class="reason-card reveal">
-        <div class="reason-number">02</div>
+      <div class="reason-card reveal stagger-2">
+        <div class="reason-num">02</div>
         <h3>You are invisible on portals</h3>
-        <p>On PropertyGuru or 99.co, your face competes with hundreds of agents on the same screen. A dedicated page puts you front and centre with no distractions.</p>
+        <p>On PropertyGuru or 99.co, your profile competes with hundreds of agents. A personal page puts you front and centre with no distractions.</p>
       </div>
-      <div class="reason-card reveal">
-        <div class="reason-number">03</div>
+      <div class="reason-card reveal stagger-3">
+        <div class="reason-num">03</div>
         <h3>Trust is built before the first call</h3>
-        <p>When a client lands on your page and sees your photo, credentials, and real testimonials, they arrive at the conversation already warm and ready to engage.</p>
+        <p>When a client sees your credentials and real testimonials, they arrive at the conversation already warm and ready to engage.</p>
       </div>
-      <div class="reason-card reveal">
-        <div class="reason-number">04</div>
+      <div class="reason-card reveal stagger-4">
+        <div class="reason-num">04</div>
         <h3>One link does everything</h3>
-        <p>Share one link on Instagram bios, WhatsApp statuses, name cards, and flyers. Every touchpoint leads to the same professional first impression.</p>
+        <p>Instagram bio, WhatsApp status, name card, flyer — every touchpoint leads to the same professional first impression.</p>
       </div>
-      <div class="reason-card reveal">
-        <div class="reason-number">05</div>
-        <h3>Your brand survives portal changes</h3>
-        <p>Portals change algorithms, pricing, and layouts without warning. Your personal page belongs to you — your online identity is never at the mercy of a platform.</p>
+      <div class="reason-card reveal stagger-5">
+        <div class="reason-num">05</div>
+        <h3>Your brand outlasts any portal</h3>
+        <p>Portals change algorithms and pricing without warning. Your personal page belongs to you — always.</p>
       </div>
-      <div class="reason-card reveal">
-        <div class="reason-number">06</div>
-        <h3>It works 24/7, even while you sleep</h3>
-        <p>A listing page expires when the unit is sold. Your personal page keeps working indefinitely, generating enquiries and referrals long after any single deal closes.</p>
+      <div class="reason-card reveal stagger-6">
+        <div class="reason-num">06</div>
+        <h3>It works while you sleep</h3>
+        <p>A listing expires when a unit is sold. Your personal page keeps generating enquiries and referrals indefinitely.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Quote Band -->
-<div class="quote-band">
+<!-- Pull Quote -->
+<div class="pull-quote">
   <blockquote>
-    "People don't hire the agent with the best listing. They hire the agent they trust most."
+    "Clients don't hire the agent with the best listing.<br>
+    They hire the agent they <strong>trust the most.</strong>"
   </blockquote>
-  <cite>— The reality every top agent already knows</cite>
+  <cite>The reality every top-producing agent already knows</cite>
 </div>
 
-<!-- Feature Rows (What Your Page Includes) -->
-<div class="story-wrap">
-  <div class="story-inner">
-    <h2 class="section-title reveal from-left">What Your Personal Page Gives You</h2>
-    <p class="section-lead reveal from-left" style="margin-bottom:2rem;">Everything a client needs to choose you — on a single, professional page.</p>
-
-    <div class="feature-row reveal from-left">
-      <div class="feature-icon">📸</div>
-      <div class="feature-body">
-        <h3>A professional first impression</h3>
-        <p>Your photo, a short personal bio, and your area of expertise tell clients who you are within the first five seconds. No competing faces, no distracting ads.</p>
+<!-- Features -->
+<div class="wrap wrap--cream">
+  <div class="container">
+    <p class="section-label reveal from-left">What You Get</p>
+    <h2 class="section-heading reveal from-left">Everything on one professional page</h2>
+    <p class="section-lead reveal from-left">We build it for you. You just share the link.</p>
+    <div class="features-list">
+      <div class="feature-item reveal">
+        <div class="feature-emoji">📸</div>
+        <div class="feature-body">
+          <h3>Professional photo &amp; bio</h3>
+          <p>Your face, your story, your specialisation — visible within the first five seconds. No competing faces, no portal ads.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="feature-row reveal from-left">
-      <div class="feature-icon">🏅</div>
-      <div class="feature-body">
-        <h3>Awards and credentials that speak for you</h3>
-        <p>Display your CEA registration, agency accolades, and years of experience. Credentials that are buried on a portal profile are front and centre on your personal page.</p>
+      <div class="feature-item reveal">
+        <div class="feature-emoji">🏅</div>
+        <div class="feature-body">
+          <h3>Awards &amp; credentials front and centre</h3>
+          <p>CEA registration, agency accolades, years of experience — the proof points buried on portal profiles are the first thing clients see here.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="feature-row reveal from-left">
-      <div class="feature-icon">💬</div>
-      <div class="feature-body">
-        <h3>Real testimonials from real clients</h3>
-        <p>Nothing converts a fence-sitter faster than a genuine quote from a satisfied client. Your page gives these the prominence they deserve.</p>
+      <div class="feature-item reveal">
+        <div class="feature-emoji">💬</div>
+        <div class="feature-body">
+          <h3>Client testimonials that convert</h3>
+          <p>Nothing moves a fence-sitter faster than a genuine quote from a satisfied client. Your page gives them the prominence they deserve.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="feature-row reveal from-left">
-      <div class="feature-icon">🏠</div>
-      <div class="feature-body">
-        <h3>Featured listings and sold properties</h3>
-        <p>Highlight the properties you're proud of — not just active listings, but your track record of successful deals that prove your expertise.</p>
+      <div class="feature-item reveal">
+        <div class="feature-emoji">🏠</div>
+        <div class="feature-body">
+          <h3>Featured listings &amp; sold history</h3>
+          <p>Not just active listings — your track record of completed deals proves your expertise to every visitor.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="feature-row reveal from-left">
-      <div class="feature-icon">📲</div>
-      <div class="feature-body">
-        <h3>One-tap WhatsApp contact</h3>
-        <p>A prominent WhatsApp button removes all friction. Clients who are ready to talk can reach you instantly — without searching for your number.</p>
+      <div class="feature-item reveal">
+        <div class="feature-emoji">📲</div>
+        <div class="feature-body">
+          <h3>One-tap WhatsApp button</h3>
+          <p>Clients who are ready to talk reach you instantly — no searching for your number, no friction.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Final CTA -->
-<div class="cta-wrap">
-  <h2 class="reveal">Ready to Stand Out?</h2>
-  <p class="reveal">
-    Get your professional personal landing page today. We handle everything — you just share your link.
-  </p>
-  <div class="cta-buttons reveal">
-    <a href="https://wa.me/6587423466" class="btn-primary">Get My Page — $20/yr</a>
-    <a href="/" class="btn-secondary">Back to Home</a>
+<div class="cta-section">
+  <div class="container">
+    <h2 class="reveal">Stop renting space on<br>someone else's platform.<br><em>Own your presence.</em></h2>
+    <p class="reveal">$20 a year. We handle everything. You start sharing your link.</p>
+    <div class="cta-group reveal">
+      <a href="https://wa.me/6587423466" class="btn-cta">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us — $20/yr
+      </a>
+      <a href="/" class="btn-ghost">← Back to home</a>
+    </div>
   </div>
 </div>
 
 <!-- Footer -->
 <footer class="footer">
   <p>&copy; 2025 <a href="/">Prop Find</a> · Professional Landing Pages for Singapore Property Agents</p>
+  <p><a href="/">propfind.me</a></p>
 </footer>
 
 <script is:inline>
 (function () {
-  // Scroll-reveal for .reveal elements
-  var revealObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
+  var EXPO = 'cubic-bezier(0.16,1,0.3,1)';
+  var QUART = 'cubic-bezier(0.25,1,0.5,1)';
+
+  var staggerDelays = { 'stagger-1': 80, 'stagger-2': 160, 'stagger-3': 240, 'stagger-4': 320, 'stagger-5': 400, 'stagger-6': 480 };
+
+  function getDelay(el) {
+    for (var cls in staggerDelays) {
+      if (el.classList.contains(cls)) return staggerDelays[cls];
+    }
+    return 0;
+  }
+
+  function prepReveal(el) {
+    var fromLeft = el.classList.contains('from-left');
+    el.style.opacity = '0';
+    el.style.transform = fromLeft ? 'translateX(-24px)' : 'translateY(28px)';
+  }
+
+  function showReveal(el) {
+    var delay = getDelay(el);
+    el.style.transition = 'opacity 600ms ' + EXPO + ' ' + delay + 'ms, transform 600ms ' + EXPO + ' ' + delay + 'ms';
+    el.style.opacity = '1';
+    el.style.transform = 'translate(0,0)';
+  }
+
+  function prepRow(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(-12px)';
+  }
+
+  function showRow(el, delay) {
+    el.style.transition = 'opacity 400ms ' + QUART + ' ' + delay + 'ms, transform 400ms ' + QUART + ' ' + delay + 'ms';
+    el.style.opacity = '1';
+    el.style.transform = 'translateX(0)';
+  }
+
+  function init() {
+    if (!('IntersectionObserver' in window)) return;
+
+    // Hide elements only after JS confirms IO is available
+    var reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(prepReveal);
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { showReveal(e.target); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+    reveals.forEach(function (el) { obs.observe(el); });
+
+    var rows = document.querySelectorAll('.cmp-row-reveal');
+    rows.forEach(prepRow);
+
+    var tableObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.cmp-row-reveal').forEach(function (row, i) {
+            showRow(row, i * 70);
+          });
+          tableObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0 });
+    document.querySelectorAll('.cmp-table').forEach(function (t) { tableObs.observe(t); });
+  }
+
+  function heroEntrance() {
+    var EXPO = 'cubic-bezier(0.16,1,0.3,1)';
+    [
+      { sel: '.hero-kicker', delay: 100 },
+      { sel: '.hero h1',     delay: 230 },
+      { sel: '.hero-sub',    delay: 360 },
+      { sel: '.hero-actions',delay: 480 }
+    ].forEach(function (item) {
+      var el = document.querySelector(item.sel);
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      setTimeout(function () {
+        el.style.transition = 'opacity 650ms ' + EXPO + ', transform 650ms ' + EXPO;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, item.delay);
     });
-  }, { threshold: 0.15 });
+  }
 
-  document.querySelectorAll('.reveal').forEach(function (el) {
-    revealObserver.observe(el);
-  });
-
-  // Quote band reveal
-  var quoteObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        quoteObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.quote-band').forEach(function (el) {
-    quoteObserver.observe(el);
-  });
-
-  // Comparison table rows stagger
-  var rowObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var rows = entry.target.querySelectorAll('tbody tr');
-        rows.forEach(function (row, i) {
-          setTimeout(function () {
-            row.classList.add('visible');
-          }, i * 80);
-        });
-        rowObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.compare-table').forEach(function (el) {
-    rowObserver.observe(el);
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { heroEntrance(); init(); });
+  } else {
+    heroEntrance();
+    init();
+  }
 })();
 </script>
 </Layout>
