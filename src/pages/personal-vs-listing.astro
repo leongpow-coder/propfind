@@ -329,6 +329,103 @@ import Layout from '../layouts/Layout.astro';
     .compare-table th, .compare-table td { padding: 0.75rem 0.75rem; font-size: 0.85rem; }
     .hero { padding: 3.5rem 1.25rem 3rem; }
   }
+
+  /* ── ANIMATIONS ── */
+
+  /* Hero entrance */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .hero-eyebrow { animation: fadeDown 0.6s ease both; animation-delay: 0.1s; }
+  .hero h1      { animation: fadeUp  0.7s ease both; animation-delay: 0.25s; }
+  .hero-subtitle{ animation: fadeUp  0.7s ease both; animation-delay: 0.4s; }
+  .hero-cta     { animation: fadeUp  0.7s ease both; animation-delay: 0.55s; }
+
+  /* Scroll-reveal base state */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.from-left  { transform: translateX(-32px); }
+  .reveal.from-right { transform: translateX(32px); }
+  .reveal.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* Stagger children inside grids */
+  .reasons-grid .reason-card { transition-delay: 0s; }
+  .reasons-grid .reason-card:nth-child(2) { transition-delay: 0.1s; }
+  .reasons-grid .reason-card:nth-child(3) { transition-delay: 0.2s; }
+  .reasons-grid .reason-card:nth-child(4) { transition-delay: 0.1s; }
+  .reasons-grid .reason-card:nth-child(5) { transition-delay: 0.2s; }
+  .reasons-grid .reason-card:nth-child(6) { transition-delay: 0.3s; }
+
+  /* Table rows stagger */
+  .compare-table tbody tr {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .compare-table tbody tr.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Card hover lift */
+  .reason-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .reason-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  /* Feature icon pulse on hover */
+  .feature-icon {
+    transition: transform 0.25s ease;
+  }
+  .feature-row:hover .feature-icon {
+    transform: scale(1.15);
+  }
+
+  /* CTA button hover */
+  .btn-primary {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+  .btn-secondary {
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.7);
+  }
+
+  /* Quote band fade */
+  .quote-band blockquote,
+  .quote-band cite {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .quote-band cite { transition-delay: 0.2s; }
+  .quote-band.visible blockquote,
+  .quote-band.visible cite {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 
 <!-- Nav -->
@@ -350,8 +447,8 @@ import Layout from '../layouts/Layout.astro';
 <!-- Comparison Table -->
 <div class="compare-wrap">
   <div class="compare-inner">
-    <h2 class="section-title">Side-by-Side Comparison</h2>
-    <p class="section-lead">See exactly how a personal landing page stacks up against a typical portal listing page.</p>
+    <h2 class="section-title reveal">Side-by-Side Comparison</h2>
+    <p class="section-lead reveal">See exactly how a personal landing page stacks up against a typical portal listing page.</p>
     <table class="compare-table">
       <thead>
         <tr>
@@ -409,35 +506,35 @@ import Layout from '../layouts/Layout.astro';
 <!-- 6 Reasons -->
 <div class="reasons-wrap">
   <div class="section">
-    <h2 class="section-title">6 Reasons a Personal Page Changes Everything</h2>
-    <p class="section-lead">Property portals are built to sell properties. A personal landing page is built to sell <strong>you</strong>.</p>
+    <h2 class="section-title reveal from-left">6 Reasons a Personal Page Changes Everything</h2>
+    <p class="section-lead reveal from-left">Property portals are built to sell properties. A personal landing page is built to sell <strong>you</strong>.</p>
     <div class="reasons-grid">
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">01</div>
         <h3>Clients choose agents, not listings</h3>
         <p>Research shows buyers and sellers interview multiple agents before committing. Your personal page gives them a reason to stop looking after they find you.</p>
       </div>
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">02</div>
         <h3>You are invisible on portals</h3>
         <p>On PropertyGuru or 99.co, your face competes with hundreds of agents on the same screen. A dedicated page puts you front and centre with no distractions.</p>
       </div>
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">03</div>
         <h3>Trust is built before the first call</h3>
         <p>When a client lands on your page and sees your photo, credentials, and real testimonials, they arrive at the conversation already warm and ready to engage.</p>
       </div>
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">04</div>
         <h3>One link does everything</h3>
         <p>Share one link on Instagram bios, WhatsApp statuses, name cards, and flyers. Every touchpoint leads to the same professional first impression.</p>
       </div>
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">05</div>
         <h3>Your brand survives portal changes</h3>
         <p>Portals change algorithms, pricing, and layouts without warning. Your personal page belongs to you — your online identity is never at the mercy of a platform.</p>
       </div>
-      <div class="reason-card">
+      <div class="reason-card reveal">
         <div class="reason-number">06</div>
         <h3>It works 24/7, even while you sleep</h3>
         <p>A listing page expires when the unit is sold. Your personal page keeps working indefinitely, generating enquiries and referrals long after any single deal closes.</p>
@@ -457,10 +554,10 @@ import Layout from '../layouts/Layout.astro';
 <!-- Feature Rows (What Your Page Includes) -->
 <div class="story-wrap">
   <div class="story-inner">
-    <h2 class="section-title">What Your Personal Page Gives You</h2>
-    <p class="section-lead" style="margin-bottom:2rem;">Everything a client needs to choose you — on a single, professional page.</p>
+    <h2 class="section-title reveal from-left">What Your Personal Page Gives You</h2>
+    <p class="section-lead reveal from-left" style="margin-bottom:2rem;">Everything a client needs to choose you — on a single, professional page.</p>
 
-    <div class="feature-row">
+    <div class="feature-row reveal from-left">
       <div class="feature-icon">📸</div>
       <div class="feature-body">
         <h3>A professional first impression</h3>
@@ -468,7 +565,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <div class="feature-row">
+    <div class="feature-row reveal from-left">
       <div class="feature-icon">🏅</div>
       <div class="feature-body">
         <h3>Awards and credentials that speak for you</h3>
@@ -476,7 +573,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <div class="feature-row">
+    <div class="feature-row reveal from-left">
       <div class="feature-icon">💬</div>
       <div class="feature-body">
         <h3>Real testimonials from real clients</h3>
@@ -484,7 +581,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <div class="feature-row">
+    <div class="feature-row reveal from-left">
       <div class="feature-icon">🏠</div>
       <div class="feature-body">
         <h3>Featured listings and sold properties</h3>
@@ -492,7 +589,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <div class="feature-row">
+    <div class="feature-row reveal from-left">
       <div class="feature-icon">📲</div>
       <div class="feature-body">
         <h3>One-tap WhatsApp contact</h3>
@@ -504,11 +601,11 @@ import Layout from '../layouts/Layout.astro';
 
 <!-- Final CTA -->
 <div class="cta-wrap">
-  <h2>Ready to Stand Out?</h2>
-  <p>
+  <h2 class="reveal">Ready to Stand Out?</h2>
+  <p class="reveal">
     Get your professional personal landing page today. We handle everything — you just share your link.
   </p>
-  <div class="cta-buttons">
+  <div class="cta-buttons reveal">
     <a href="https://wa.me/6587423466" class="btn-primary">Get My Page — $20/yr</a>
     <a href="/" class="btn-secondary">Back to Home</a>
   </div>
@@ -518,4 +615,55 @@ import Layout from '../layouts/Layout.astro';
 <footer class="footer">
   <p>&copy; 2025 <a href="/">Prop Find</a> · Professional Landing Pages for Singapore Property Agents</p>
 </footer>
+
+<script is:inline>
+(function () {
+  // Scroll-reveal for .reveal elements
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    revealObserver.observe(el);
+  });
+
+  // Quote band reveal
+  var quoteObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        quoteObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.quote-band').forEach(function (el) {
+    quoteObserver.observe(el);
+  });
+
+  // Comparison table rows stagger
+  var rowObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var rows = entry.target.querySelectorAll('tbody tr');
+        rows.forEach(function (row, i) {
+          setTimeout(function () {
+            row.classList.add('visible');
+          }, i * 80);
+        });
+        rowObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.compare-table').forEach(function (el) {
+    rowObserver.observe(el);
+  });
+})();
+</script>
 </Layout>
