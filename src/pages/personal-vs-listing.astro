@@ -1,0 +1,521 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+<style>
+  :root {
+    --color-primary: #1a1a2e;
+    --color-accent: #e94560;
+    --color-accent2: #0f3460;
+    --color-light: #f8f9fa;
+    --color-text: #333;
+    --color-muted: #666;
+    --font: 'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    color: var(--color-text);
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--color-primary);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-cta {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--color-primary);
+    color: #fff;
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span {
+    color: var(--color-accent);
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.9rem 2.25rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .hero-cta:hover { opacity: 0.88; }
+
+  /* ── SECTION COMMON ── */
+  .section {
+    padding: 4.5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    max-width: 680px;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-wrap {
+    background: var(--color-light);
+    padding: 4rem 2rem;
+  }
+  .compare-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .compare-inner .section-title {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .compare-inner .section-lead {
+    text-align: center;
+    margin: 0 auto 2.5rem;
+  }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  .compare-table thead tr {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .compare-table th {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+  .compare-table th:first-child { width: 35%; }
+  .compare-table td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .compare-table tbody tr:last-child td { border-bottom: none; }
+  .compare-table tbody tr:nth-child(even) td { background: #fafafa; }
+  .col-listing { color: #b91c1c; }
+  .col-personal { color: #16a34a; font-weight: 600; }
+  .icon-x::before { content: '✗ '; }
+  .icon-check::before { content: '✓ '; }
+
+  /* ── REASONS GRID ── */
+  .reasons-wrap {
+    background: #fff;
+  }
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem;
+    margin-top: 0.5rem;
+  }
+  .reason-card {
+    background: var(--color-light);
+    border-radius: 8px;
+    padding: 1.75rem;
+    border-top: 3px solid var(--color-accent);
+  }
+  .reason-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .reason-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .reason-card p {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* ── QUOTE BAND ── */
+  .quote-band {
+    background: var(--color-accent2);
+    color: #fff;
+    text-align: center;
+    padding: 3.5rem 2rem;
+  }
+  .quote-band blockquote {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.5;
+    max-width: 680px;
+    margin: 0 auto 1rem;
+    font-style: italic;
+  }
+  .quote-band cite {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.65);
+    font-style: normal;
+  }
+
+  /* ── STORY SECTION ── */
+  .story-wrap {
+    background: var(--color-light);
+    padding: 4.5rem 2rem;
+  }
+  .story-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── FEATURE ROWS ── */
+  .feature-row {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+  }
+  .feature-row:last-child { margin-bottom: 0; }
+  .feature-icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+  .feature-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .feature-body p {
+    font-size: 0.92rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-wrap {
+    background: var(--color-primary);
+    color: #fff;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  .cta-wrap h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .cta-wrap p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.9rem 2.25rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: #fff;
+    padding: 0.9rem 2.25rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--color-primary);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.8rem;
+  }
+  .footer a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .feature-row { flex-direction: column; gap: 1rem; }
+    .compare-table th, .compare-table td { padding: 0.75rem 0.75rem; font-size: 0.85rem; }
+    .hero { padding: 3.5rem 1.25rem 3rem; }
+  }
+</style>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-brand">Prop Find</a>
+  <a href="/#contact" class="nav-cta">Get My Page</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">For Singapore Property Agents</p>
+  <h1>Why Your Own Landing Page<br>Beats a <span>Property Listing Page</span></h1>
+  <p class="hero-subtitle">
+    A property listing page sells the unit. A personal landing page sells <em>you</em> — the agent clients choose to trust, call, and refer.
+  </p>
+  <a href="https://wa.me/6587423466" class="hero-cta">Get My Personal Page — $20/yr</a>
+</section>
+
+<!-- Comparison Table -->
+<div class="compare-wrap">
+  <div class="compare-inner">
+    <h2 class="section-title">Side-by-Side Comparison</h2>
+    <p class="section-lead">See exactly how a personal landing page stacks up against a typical portal listing page.</p>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>What Clients See</th>
+          <th>Property Listing Page</th>
+          <th>Personal Landing Page</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Your photo &amp; name</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Small thumbnail, easily ignored</td>
+          <td class="col-personal"><span class="icon-check"></span>Prominent, professional headshot</td>
+        </tr>
+        <tr>
+          <td><strong>Your credentials</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Buried or not shown at all</td>
+          <td class="col-personal"><span class="icon-check"></span>Awards, CEA number, years of experience</td>
+        </tr>
+        <tr>
+          <td><strong>Client testimonials</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Not available on portals</td>
+          <td class="col-personal"><span class="icon-check"></span>Real quotes that build instant trust</td>
+        </tr>
+        <tr>
+          <td><strong>Competing agents shown</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Yes — dozens of agents beside you</td>
+          <td class="col-personal"><span class="icon-check"></span>No — it's your page, only you</td>
+        </tr>
+        <tr>
+          <td><strong>Google searchability</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Portal ranks, not your profile</td>
+          <td class="col-personal"><span class="icon-check"></span>Your name surfaces directly</td>
+        </tr>
+        <tr>
+          <td><strong>You control the content</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Portal decides what's shown</td>
+          <td class="col-personal"><span class="icon-check"></span>Fully yours — update anytime</td>
+        </tr>
+        <tr>
+          <td><strong>Works on flyers &amp; WhatsApp</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Long, ugly portal URLs</td>
+          <td class="col-personal"><span class="icon-check"></span>One short, shareable link</td>
+        </tr>
+        <tr>
+          <td><strong>Showcases sold history</strong></td>
+          <td class="col-listing"><span class="icon-x"></span>Only active listings</td>
+          <td class="col-personal"><span class="icon-check"></span>Past deals, track record, expertise</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 6 Reasons -->
+<div class="reasons-wrap">
+  <div class="section">
+    <h2 class="section-title">6 Reasons a Personal Page Changes Everything</h2>
+    <p class="section-lead">Property portals are built to sell properties. A personal landing page is built to sell <strong>you</strong>.</p>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-number">01</div>
+        <h3>Clients choose agents, not listings</h3>
+        <p>Research shows buyers and sellers interview multiple agents before committing. Your personal page gives them a reason to stop looking after they find you.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-number">02</div>
+        <h3>You are invisible on portals</h3>
+        <p>On PropertyGuru or 99.co, your face competes with hundreds of agents on the same screen. A dedicated page puts you front and centre with no distractions.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-number">03</div>
+        <h3>Trust is built before the first call</h3>
+        <p>When a client lands on your page and sees your photo, credentials, and real testimonials, they arrive at the conversation already warm and ready to engage.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-number">04</div>
+        <h3>One link does everything</h3>
+        <p>Share one link on Instagram bios, WhatsApp statuses, name cards, and flyers. Every touchpoint leads to the same professional first impression.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-number">05</div>
+        <h3>Your brand survives portal changes</h3>
+        <p>Portals change algorithms, pricing, and layouts without warning. Your personal page belongs to you — your online identity is never at the mercy of a platform.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-number">06</div>
+        <h3>It works 24/7, even while you sleep</h3>
+        <p>A listing page expires when the unit is sold. Your personal page keeps working indefinitely, generating enquiries and referrals long after any single deal closes.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quote Band -->
+<div class="quote-band">
+  <blockquote>
+    "People don't hire the agent with the best listing. They hire the agent they trust most."
+  </blockquote>
+  <cite>— The reality every top agent already knows</cite>
+</div>
+
+<!-- Feature Rows (What Your Page Includes) -->
+<div class="story-wrap">
+  <div class="story-inner">
+    <h2 class="section-title">What Your Personal Page Gives You</h2>
+    <p class="section-lead" style="margin-bottom:2rem;">Everything a client needs to choose you — on a single, professional page.</p>
+
+    <div class="feature-row">
+      <div class="feature-icon">📸</div>
+      <div class="feature-body">
+        <h3>A professional first impression</h3>
+        <p>Your photo, a short personal bio, and your area of expertise tell clients who you are within the first five seconds. No competing faces, no distracting ads.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">🏅</div>
+      <div class="feature-body">
+        <h3>Awards and credentials that speak for you</h3>
+        <p>Display your CEA registration, agency accolades, and years of experience. Credentials that are buried on a portal profile are front and centre on your personal page.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">💬</div>
+      <div class="feature-body">
+        <h3>Real testimonials from real clients</h3>
+        <p>Nothing converts a fence-sitter faster than a genuine quote from a satisfied client. Your page gives these the prominence they deserve.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">🏠</div>
+      <div class="feature-body">
+        <h3>Featured listings and sold properties</h3>
+        <p>Highlight the properties you're proud of — not just active listings, but your track record of successful deals that prove your expertise.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-icon">📲</div>
+      <div class="feature-body">
+        <h3>One-tap WhatsApp contact</h3>
+        <p>A prominent WhatsApp button removes all friction. Clients who are ready to talk can reach you instantly — without searching for your number.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Final CTA -->
+<div class="cta-wrap">
+  <h2>Ready to Stand Out?</h2>
+  <p>
+    Get your professional personal landing page today. We handle everything — you just share your link.
+  </p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/6587423466" class="btn-primary">Get My Page — $20/yr</a>
+    <a href="/" class="btn-secondary">Back to Home</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2025 <a href="/">Prop Find</a> · Professional Landing Pages for Singapore Property Agents</p>
+</footer>
+</Layout>
