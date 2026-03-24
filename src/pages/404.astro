@@ -1,0 +1,176 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Page Not Found — Prop Find"
+  description="The page you were looking for doesn't exist. Head back to Prop Find."
+  ogSlug="home"
+  canonicalPath=""
+  robots="noindex,follow"
+>
+
+<Fragment slot="head">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,300&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+</Fragment>
+
+<style is:global>
+  :root {
+    --navy:      oklch(18% 0.04 260);
+    --navy-mid:  oklch(25% 0.04 260);
+    --accent:    oklch(44% 0.14 250);
+    --accent-lt: oklch(65% 0.12 250);
+    --cream:     oklch(97% 0.008 80);
+    --ink:       oklch(20% 0.02 260);
+    --ink-2:     oklch(38% 0.02 260);
+    --ink-3:     oklch(55% 0.015 260);
+    --border:    oklch(88% 0.01 260);
+
+    --ff-display: 'Fraunces', Georgia, serif;
+    --ff-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--ff-body);
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+    height: 60px;
+    border-bottom: 1px solid oklch(30% 0.04 260);
+  }
+  .nav-brand {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-brand span { color: var(--accent-lt); }
+
+  /* ── MAIN ── */
+  .notfound {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+  }
+  .notfound-inner {
+    max-width: 560px;
+  }
+  .notfound-code {
+    font-family: var(--ff-display);
+    font-weight: 900;
+    font-size: clamp(5rem, 20vw, 9rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--border);
+    margin-bottom: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .notfound-heading {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .notfound-body {
+    font-size: 1rem;
+    color: var(--ink-2);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .notfound-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    padding: 0.875rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 150ms, transform 200ms cubic-bezier(0.25,1,0.5,1);
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+  .btn-ghost {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+    transition: color 150ms, border-color 150ms;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink-3); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    border-top: 1px solid oklch(28% 0.04 260);
+    padding: 1.5rem clamp(1.5rem, 5vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .footer p { font-size: 0.8125rem; color: oklch(68% 0.02 260); }
+  .footer a  { color: oklch(75% 0.02 260); text-decoration: underline; text-underline-offset: 2px; transition: color 150ms; }
+  .footer a:hover { color: oklch(88% 0.02 260); }
+</style>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">Prop<span>Find</span></a>
+</nav>
+
+<main class="notfound">
+  <div class="notfound-inner">
+    <div class="notfound-code">404</div>
+    <h1 class="notfound-heading">This page doesn't exist.</h1>
+    <p class="notfound-body">
+      The link may be broken or the page may have moved.<br>
+      Let's get you back on track.
+    </p>
+    <div class="notfound-actions">
+      <a href="/" class="btn-primary">← Back to Home</a>
+      <a href="https://wa.me/6587423466" class="btn-ghost">Contact us on WhatsApp</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>&copy; {new Date().getFullYear()} <a href="/">Prop Find</a> &middot; Professional Landing Pages for Singapore Property Agents</p>
+  <p><a href="/privacy">Privacy Policy</a></p>
+</footer>
+
+</Layout>

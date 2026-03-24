@@ -1,0 +1,332 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Privacy Policy — Prop Find"
+  description="How Prop Find collects, uses, and protects your personal data in accordance with Singapore PDPA."
+  ogSlug="privacy"
+  canonicalPath="/privacy"
+  robots="noindex,follow"
+>
+
+<Fragment slot="head">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</Fragment>
+
+<style is:global>
+  /* ── TOKENS (same as site) ── */
+  :root {
+    --navy:       oklch(18% 0.04 260);
+    --navy-mid:   oklch(25% 0.04 260);
+    --accent:     oklch(44% 0.14 250);
+    --accent-lt:  oklch(65% 0.12 250);
+    --cream:      oklch(97% 0.008 80);
+    --cream-2:    oklch(93% 0.01 80);
+    --ink:        oklch(20% 0.02 260);
+    --ink-2:      oklch(38% 0.02 260);
+    --ink-3:      oklch(55% 0.015 260);
+    --border:     oklch(88% 0.01 260);
+
+    --ff-display: 'Fraunces', Georgia, serif;
+    --ff-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--ff-body);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+    height: 60px;
+    border-bottom: 1px solid oklch(30% 0.04 260);
+  }
+  .nav-brand {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-brand span { color: var(--accent-lt); }
+
+  /* ── HERO ── */
+  .page-hero {
+    background: var(--navy);
+    color: #fff;
+    padding: clamp(3rem, 8vw, 5rem) clamp(1.5rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 20% 50%, oklch(44% 0.14 250 / 0.14), transparent);
+    pointer-events: none;
+  }
+  .page-hero-inner {
+    max-width: 760px;
+    position: relative;
+    z-index: 1;
+  }
+  .page-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-lt);
+    margin-bottom: 1.25rem;
+  }
+  .page-kicker::before {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--accent-lt);
+  }
+  .page-hero h1 {
+    font-family: var(--ff-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .page-hero p {
+    font-size: 1.0625rem;
+    color: oklch(72% 0.02 260);
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  /* ── CONTENT AREA ── */
+  .content-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+  }
+
+  .policy-section {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .policy-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .policy-section h2 {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 3vw, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .policy-section p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+    line-height: 1.8;
+    margin-bottom: 0.875rem;
+  }
+  .policy-section p:last-child { margin-bottom: 0; }
+
+  .policy-section ul {
+    list-style: none;
+    margin: 0.75rem 0 0.875rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .policy-section ul li {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .policy-section ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .policy-section a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 150ms;
+  }
+  .policy-section a:hover { color: var(--accent-lt); }
+
+  .effective-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    background: var(--cream-2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.375rem 0.75rem;
+    margin-bottom: 3rem;
+  }
+  .effective-badge::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: oklch(50% 0.12 145);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    border-top: 1px solid oklch(28% 0.04 260);
+    padding: 1.5rem clamp(1.5rem, 5vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .footer p { font-size: 0.8125rem; color: oklch(68% 0.02 260); }
+  .footer a  { color: oklch(75% 0.02 260); text-decoration: underline; text-underline-offset: 2px; transition: color 150ms; }
+  .footer a:hover { color: oklch(88% 0.02 260); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-brand">Prop<span>Find</span></a>
+</nav>
+
+<!-- Page Hero -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <p class="page-kicker">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p>We are committed to protecting your personal data in accordance with Singapore's Personal Data Protection Act 2012 (PDPA).</p>
+  </div>
+</header>
+
+<!-- Content -->
+<main class="content-wrap">
+
+  <div class="effective-badge">Effective date: 1 January 2025</div>
+
+  <div class="policy-section">
+    <h2>1. Who We Are</h2>
+    <p>Prop Find ("we", "our", "us") operates the website at <a href="https://www.propfind.me">www.propfind.me</a>. We provide professional landing page services for Singapore real estate agents.</p>
+    <p>For any privacy-related enquiries, contact us via WhatsApp at <a href="https://wa.me/6587423466">+65 8742 3466</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>2. What Data We Collect</h2>
+    <p>When you visit our website or contact us, we may collect the following:</p>
+    <ul>
+      <li><strong>Usage data</strong> — pages visited, time spent, browser type, and referring URL, collected automatically via Google Analytics 4.</li>
+      <li><strong>Contact information</strong> — your name, phone number, or WhatsApp message when you reach out to us directly.</li>
+      <li><strong>Agent profile data</strong> — photo, biography, CEA registration number, credentials, and testimonials you provide for your landing page.</li>
+    </ul>
+    <p>We do not collect payment card details directly. Any payment processing is handled by third-party providers under their own privacy terms.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>3. How We Use Your Data</h2>
+    <p>We use the data we collect to:</p>
+    <ul>
+      <li>Build and maintain your personal agent landing page.</li>
+      <li>Respond to your enquiries and provide customer support.</li>
+      <li>Understand how visitors use our website and improve our service (via Google Analytics).</li>
+      <li>Send you service-related updates (e.g. renewal notices), if you are a paying customer.</li>
+    </ul>
+    <p>We do not sell your personal data to third parties. We do not use your data for unsolicited marketing without your consent.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>4. Google Analytics</h2>
+    <p>Our website uses Google Analytics 4 (GA4) to collect anonymised usage statistics. Google Analytics sets cookies in your browser to track sessions and page views. The data is processed by Google LLC and is subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+    <p>You can opt out of Google Analytics tracking at any time by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>5. Cookies</h2>
+    <p>We use cookies solely for analytics purposes (Google Analytics). We do not use advertising or tracking cookies beyond this.</p>
+    <p>You can control or delete cookies through your browser settings at any time. Disabling cookies will not affect your ability to browse this website.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>6. Data Retention</h2>
+    <p>We retain your personal data only as long as necessary to fulfil the purposes it was collected for, or as required by law. Agent profile data is retained for the duration of your active subscription and deleted within 30 days of cancellation upon request.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>7. Your Rights Under PDPA</h2>
+    <p>Under the Singapore Personal Data Protection Act, you have the right to:</p>
+    <ul>
+      <li>Request access to the personal data we hold about you.</li>
+      <li>Request correction of any inaccurate personal data.</li>
+      <li>Withdraw consent for the collection, use, or disclosure of your personal data (subject to legal and contractual restrictions).</li>
+    </ul>
+    <p>To exercise any of these rights, contact us via WhatsApp at <a href="https://wa.me/6587423466">+65 8742 3466</a>. We will respond within 10 business days.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>8. Third-Party Links</h2>
+    <p>Our website may contain links to third-party websites (e.g. PropertyGuru, 99.co). We are not responsible for the privacy practices of those sites and encourage you to review their privacy policies.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. The effective date at the top of this page will reflect the most recent revision. Continued use of our website after any changes constitutes acceptance of the updated policy.</p>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; {new Date().getFullYear()} <a href="/">Prop Find</a> &middot; Professional Landing Pages for Singapore Property Agents</p>
+  <p><a href="/privacy">Privacy Policy</a></p>
+</footer>
+
+</Layout>
